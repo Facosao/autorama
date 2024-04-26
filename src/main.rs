@@ -3,6 +3,8 @@ pub mod driver;
 pub mod sensors;
 pub mod actuators;
 
+use scr_net::SCRNet;
+
 fn main() {
     let socket = scr_net::connect();
     let id: &str = "SCR";
@@ -11,28 +13,9 @@ fn main() {
         angles[i] = (-90 + (i as isize * 10)) as f64;
     }
     
-    let mut raw_angle: String = String::new();
-
-    for value in angles {
-        raw_angle += &(" ".to_owned() + &value.to_string());
-    }
-    
-    let pre_str = id.to_string() + "(init" + &raw_angle + ")";
-
-    println!("{}", pre_str);
-
-    let final_str = pre_str.as_bytes();
-    let result = socket.send(final_str);
-
-    match result {
-        Ok(_) => {}
-
-        Err(error) => {
-            println!("Failed to send data! {}", error);
-        }
-    }
+    socket.scr_init(id.to_owned(), angles);
 
     loop {
-        
+        println!("{}", socket.scr_recv());
     }
 }

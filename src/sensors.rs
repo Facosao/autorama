@@ -1,3 +1,11 @@
+const CHARS: &[char] = &[
+    '(', 'a', 'b', 'c', 'd',
+    'e', 'f', 'g', 'h', 'i',
+    'j', 'k', 'l', 'm', 'n',
+    'o', 'p', 'q', 'r', 's',
+    't', 'u', 'v', 'w', 'x',
+    'y', 'z'];
+
 pub struct Sensors {
     angle: f64, // +/- pi (rad)
     cur_lap_time: f64, // seconds
@@ -43,5 +51,34 @@ impl Sensors {
             wheel_spin_vel: todo!(),
             z: todo!(),
         }
+    }
+
+    pub fn update(&mut self, raw_str: String) {
+        let raw_sensor: Vec<&str> = raw_str.split(")").collect();
+        debug_assert!(raw_sensor.len() == 19);
+
+        let sensors: Vec<String> = raw_sensor.iter().map(|sensor| {
+            sensor.to_lowercase().trim_matches(CHARS).to_owned()
+        }).collect();
+
+        // Angle
+        self.angle = sensors[0].parse::<f64>().unwrap();
+
+        // Current lap time
+        self.cur_lap_time = sensors[1].parse::<f64>().unwrap();
+
+        // Damage
+        self.damage = sensors[2].parse::<usize>().unwrap();
+
+        // Distance from start/finish line
+        self.dist_from_start = sensors[3].parse::<f64>().unwrap();
+
+        // Total distance raced
+        self.dist_raced = sensors[4].parse::<f64>().unwrap();
+
+        // Focus sensors
+        let test = sensors[5].split_whitespace().map(|focus| {
+            focus.parse::<f64>().unwrap()
+        }).collect();
     }
 }
