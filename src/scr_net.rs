@@ -39,7 +39,7 @@ impl SCRNet for UdpSocket {
         match received {
             Ok(len_received) => {
                 if len_received == 0 {
-                    panic!("len_received == 0");
+                    panic!("scr_recv_len == 0");
                 }
                 
                 let recv_str = std::str::from_utf8(&buffer).unwrap();
