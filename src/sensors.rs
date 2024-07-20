@@ -54,6 +54,28 @@ impl Sensors {
         }
     }
 
+    //pub fn deserialize(&mut self, raw_str: String) {
+    //    let raw_sensor: Vec<&str> = raw_str
+    //        .to_lowercase()
+    //        .split(")")
+    //        .map(|item| {
+    //            item.trim_matches(&['(', ' '])
+    //        }).collect();
+    //
+    //    for sensor in raw_sensor {
+    //        match sensor {
+    //            "angle" => {
+    //                self.angle = sensor.split(":").last().unwrap()
+    //                    .parse::<f64>().unwrap();
+    //            }
+    //
+    //            _ => {
+    //                println!("unexpected argument: {}", sensor);
+    //            }
+    //        }
+    //    }
+    //}
+
     pub fn update(&mut self, raw_str: String) {
         let mut raw_sensor: Vec<&str> = raw_str.split(")").collect();
         let _ = raw_sensor.pop();
