@@ -10,11 +10,11 @@ fn main() {
     let socket = scr_net::connect();
     let id: &str = "SCR";
     let mut angles: [f64; 19] = [0.0; 19];
-    angles[0] = -90.0;
-    angles[1] = 90.0;
-    //for i in 0..19 {
-    //    angles[i] = (-90 + (i as isize * 10)) as f64;
-    //}
+    // angles[0] = -90.0;
+    // angles[1] = 90.0;
+    for i in 0..19 {
+       angles[i] = (-90 + (i as isize * 10)) as f64;
+    }
     
     let mut driver = Driver::new();
 
